@@ -1,0 +1,16 @@
+.container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .crypto {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
