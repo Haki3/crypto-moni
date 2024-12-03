@@ -1,22 +1,29 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Crypto</th>
-            <th>Price</th>
-            <th>Change</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let crypto of cryptos">
-            <td>{{crypto.name}}</td>
-            <td>{{crypto.price}}</td>
-            <td>{{crypto.change}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+<div *ngIf="isLoading" class="loading-screen">
+  <div class="loading-spinner"></div>
+  <p>Loading...</p>
+</div>
+
+<div *ngIf="!isLoading" class="container">
+  <h1>Monitor Criptos</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Simbolo</th>
+        <th>Precio ($)</th>
+        <th>24h Cambio (%)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let crypto of cryptos">
+        <td>{{ crypto.name }}</td>
+        <td>{{ crypto.symbol }}</td>
+        <td>{{ crypto.price | currency:'USD':'symbol':'1.2-2' }}</td>
+        <td [ngClass]="{ 'positive': crypto.change > 0, 'negative': crypto.change < 0 }">{{ crypto.change | number:'1.2-2' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <footer>
+    <p>&copy; 2024 Crypto Tracker</p>
+  </footer>
 </div>
