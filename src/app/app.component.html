@@ -1,25 +1,29 @@
-<div *ngIf="isLoading" class="loading-screen">
-  <div class="loading-spinner"></div>
-  <p>Loading...</p>
-</div>
-
 <div *ngIf="!isLoading" class="container">
   <h1>Monitor Criptos</h1>
+  <div class="search-container">
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar criptomoneda..." class="search-input">
+  </div>
   <table>
     <thead>
       <tr>
-        <th>Nombre</th>
-        <th>Simbolo</th>
-        <th>Precio ($)</th>
-        <th>24h Cambio (%)</th>
+        <th (click)="sortBy('name')">Nombre</th>
+        <th (click)="sortBy('symbol')">Simbolo</th>
+        <th (click)="sortBy('price')">Precio ($)</th>
+        <th (click)="sortBy('change')">24h Cambio (%)</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let crypto of cryptos">
-        <td>{{ crypto.name }}</td>
-        <td>{{ crypto.symbol }}</td>
+      <tr *ngFor="let crypto of filteredCryptos()">
+        <td class="crypto-name">
+          <img [src]="crypto.iconUrl" alt="{{ crypto.name }} logo" class="crypto-logo" width="32" height="32">
+          {{ crypto.name }}
+          <a [href]="crypto.explorer" target="_blank" class="explorer-link">
+            <img src="https://img.icons8.com/?size=100&id=7877&format=png&color=000000" alt="Explorer" class="explorer-icon" width="16" height="16">
+          </a>
+        </td>
+        <td class="symbol-text">{{ crypto.symbol }}</td>
         <td>{{ crypto.price | currency:'USD':'symbol':'1.2-2' }}</td>
-        <td [ngClass]="{ 'positive': crypto.change > 0, 'negative': crypto.change < 0 }">{{ crypto.change | number:'1.2-2' }}</td>
+        <td class="change-text" [ngClass]="{ 'positive': crypto.change > 0, 'negative': crypto.change < 0 }">{{ crypto.change | number:'1.2-2' }}</td>
       </tr>
     </tbody>
   </table>
